@@ -8,7 +8,7 @@ local player = Class{
 function player:init(world, x, y)
   self.img = love.graphics.newImage('/assets/character_block.png')
 
-  Entity.init(self, world, x, y, self.getWidth(), self.img:getHeight())
+  Entity.init(self, world, x, y, self.img:getWidth(), self.img:getHeight())
 
   self.xVelocity = 0
   self.yVelocity = 0
@@ -23,7 +23,7 @@ function player:init(world, x, y)
   self.jumpAcc       = 500
   self.jumpMaxSpeed  = 11
 
-  self.world:add(self, self(getRect()))
+  self.world:add(self, self:getRect())
 end
 
 function player:collisionFilter(other)
@@ -48,6 +48,7 @@ function player:update(dt)
     self.xVelocity = self.xVelocity - self.acc * dt
   elseif love.keyboard.isDown('right', 'd') and self.xVelocity < self.maxSpeed then
     self.xVelocity = self.xVelocity + self.acc * dt
+  end
 
   if love.keyboard.isDown('up', 'w') then
     if -self.yVelocity < self.jumpMaxSpeed and not self.hasReachedMax then
